@@ -205,4 +205,4 @@ function checkVoteValidity(msg) {
     }
 }
 
-client.login('OTUwOTYzMTAyMTI2NjA0Mzcx.YigjZw.NTi_ndA14my_2CFAwf6n-ha9p-w');
+client.login('login-key');
