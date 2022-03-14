@@ -5,9 +5,9 @@ var players = [];
 var playerChoices = [];
 var playerCards = [];
 var czarIndex = 0;
-var whiteCardValues = ["Cumray", "-ussy", "YOOOOOO", "Nude stravinsky", "Hentai land","Some bitches","Deez nuts", "Free bottom surgery", "Dumpling Palace", "Ichiban", "Yume", "Vivi's", "Yo Dumpy's?", "Booling", "The Christian Science Center", "Genshin Impact", "Pico Park", "Berklee Esports", "Kamal's irresistably hot hands", "Catgirl Miles", "We wo", "Cumracist", "Elizabeth, NJ", "Ares' keyboard", "New Hampshire Curry", "Chimken", "Among Us IRL", "Depresso Espresso", "160", "Westland"]
+var whiteCardValues = ["insert white card values]
 var whiteCards = [];
-var blackCardValues = ["__________ussy", "__________? That's what they called me in middle school.", "Berklee College of __________", "Getting my bottom surgery at __________", "Nothing is better than Little Bake's __________", "Izzi goes to Berklee and __________", "I'm single because __________", "I'm poor beacuse __________", "Inside of you are two wolves, one is __________", "2AM run to __________", "Nothing is more cringe than __________"];
+var blackCardValues = ["insert black card values"];
 var blackCards = [];
 var currBlackCard;
 const numCards = 5;
