@@ -1,13 +1,12 @@
 const Discord = require('discord.js');
-const SendmailTransport = require('nodemailer/lib/sendmail-transport');
 const client = new Discord.Client();
 var players = [];
 var playerChoices = [];
 var playerCards = [];
 var czarIndex = 0;
-var whiteCardValues = ["insert white card values];
+var whiteCardValues = ["We wo", "Bottom", "Cumray", "-ussy", "YOOOOOO", "Nude stravinsky", "Hentai land","Some bitches","Deez nuts", "Free bottom surgery", "Dumpling Palace", "Ichiban", "Yume", "Vivi's", "Yo Dumpy's?", "Booling", "The Christian Science Center", "Genshin Impact", "Black nail polish", "Pico Park", "Berklee Esports", "Get pegged", "Kamal's irresistably hot hands", "Catgirl Miles", "We wo", "Cumracist", "Elizabeth, NJ", "Ares' keyboard", "New Hampshire Curry", "Chimken", "Among Us IRL", "Depresso Espresso", "160", "Westland", "Middlesex"]
 var whiteCards = [];
-var blackCardValues = ["insert black card values"];
+var blackCardValues = ["Marc Yu is an anagram for __________", "I support men's rights, men's rights to __________", "__________ussy", "__________? That's what they called me in middle school.", "Berklee College of __________", "Getting my bottom surgery at __________", "Jacquie's high on __________ tonight", "Nothing is better than Little Bake's __________", "Introducing the newest Super Smash Bros character, __________", "Izzi goes to Berklee and __________", "I'm single because __________", "I'm poor beacuse __________", "Inside of you are two wolves, one is __________", "2AM run to __________", "Nothing is more cringe than __________"];
 var blackCards = [];
 var currBlackCard;
 const numCards = 5;
@@ -45,13 +44,20 @@ client.on('message', msg => {
             pickBlackCard(msg);
         } else if (msg.content.includes("pick")) {
             assignPicks(msg);
-            full = checkFull();
-            if (full) {
+            if (checkFull()) {
                 msg.channel.send("All responses are in, let's pick a winner!");
                 sendResults(msg);
                 checkWinner(msg);
             }
         } else if (msg.content.includes("vote")) {
+            if (msg.author.username === client.users.cache.find(user => user.id === players[czarIndex]).username) {
+                if (checkFull()) {
+                    msg.channel.send("All players have picked!");
+                } else {
+                    msg.channel.send("Not everyone has picked!");
+                    return;
+                }
+            }
             message = msg.content.replace("!cah vote ", "");
             message = parseInt(message);
             checkVoteValidity(msg);
@@ -79,7 +85,13 @@ function addPlayer(msg) {
 }
 
 function nextRound(msg) {
-    msg.channel.send("Next round!");
+    if (players.length > czarIndex + 1) {
+        czarIndex++;
+    } else {
+        czarIndex = 0;
+    }
+    msg.channel.send("Next round, " + client.users.cache.find(user => user.id === players[czarIndex]).username + " is the card czar");
+    msg.channel.send("Here's the next round!");
     pickBlackCard(msg);
     sendWhiteCards(msg);
 }
@@ -111,7 +123,7 @@ function assignPicks(msg) {
         }
         count++;
     }
-    msg.channel.send(playerChoices.length);
+    // msg.channel.send(playerChoices.length);
 }
 
 function sendWhiteCards(msg) {
@@ -147,6 +159,9 @@ function randomizeWhiteCards(msg) {
 }
 
 function checkFull() {
+    if (playerChoices.length == 0) {
+        return false;
+    }
     full = true;
     j = 0;
     while (j < playerChoices.length) {
@@ -184,9 +199,8 @@ function populatePlayerCards() {
 
 function checkWinner(msg) {
     for (i in playerCards) {
-        msg.channel.send(playerCards[i].points);
+        // msg.channel.send(playerCards[i].points);
         if (playerCards[i].points === 5) {
-            msg.channel.send("found winner");
             msg.channel.send(client.users.cache.find(user => user.id === players[i]).username + " wins!");
         }
     }
@@ -205,4 +219,4 @@ function checkVoteValidity(msg) {
     }
 }
 
-client.login('login-key');
+client.login('OTUwOTYzMTAyMTI2NjA0Mzcx.YigjZw.mDbI8NLynehe-COPko4zr9KSXmc');
