@@ -49,6 +49,7 @@ client.on('message', msg => {
             populateCards();
             populatePlayerCards();
             msg.channel.send("Starting, sending cards!");
+            randomizeWhiteCards(msg);
             sendWhiteCards(msg);
             msg.channel.send("Let's start with " + client.users.cache.find(user => user.id === players[czarIndex]).username + " as the card czar");
             pickBlackCard(msg);
@@ -78,28 +79,16 @@ client.on('message', msg => {
             }
         } else if (msg.content.includes("setup")) {
             if (msg.content.includes("default")) {
-                for (i in defaultBlackCards) {
-                    blackCardValues.push(defaultBlackCards[i])
-                }
-                for (i in defaultWhiteCards) {
-                    whiteCardValues.push(defaultWhiteCards[i])
-                }
+                loadCards(defaultWhiteCards, whiteCardValues);
+                loadCards(defaultBlackCards, blackCardValues);
             } 
             if (msg.content.includes("cacti")) {
-                for (i in cactiBlackCards) {
-                    blackCardValues.push(cactiBlackCards[i])
-                }
-                for (i in cactiWhiteCards) {
-                    whiteCardValues.push(cactiWhiteCards[i])
-                }
+                loadCards(cactiWhiteCards, whiteCardValues);
+                loadCards(cactiBlackCards, blackCardValues);
             }
             if (msg.content.includes("pride")) {
-                for (i in prideBlackCards) {
-                    blackCardValues.push(prideBlackCards[i])
-                }
-                for (i in prideWhiteCards) {
-                    whiteCardValues.push(prideWhiteCards[i])
-                }
+                loadCards(prideWhiteCards, whiteCardValues);
+                loadCards(prideBlackCards, blackCardValues);
             }
         } else if (msg.content.includes("check white values")) {
             for (i in whiteCardValues) {
@@ -108,6 +97,12 @@ client.on('message', msg => {
         }
     }
 });
+
+function loadCards(input, output) {
+    for (i in input) {
+        output.push(input[i])
+    }
+}
 
 
 client.on('ready', () => {
@@ -133,7 +128,6 @@ function nextRound(msg) {
     msg.channel.send("Next round, " + client.users.cache.find(user => user.id === players[czarIndex]).username + " is the card czar");
     msg.channel.send("Here's the next round!");
     pickBlackCard(msg);
-    // sendWhiteCards(msg);
     sendNewWhiteCards(msg);
 }
 
@@ -149,16 +143,7 @@ function sendNewWhiteCards(msg) {
             }
         }
     }
-    i = 0;
-    while (i < playerCards.length) {
-        j = 0;
-        while (j < numCards) {
-            client.users.cache.find(user => user.id === players[i]).send(playerCards[i].cards[j].value);
-            j++;
-        }
-        client.users.cache.find(user => user.id === players[i]).send("-----------------------------");
-        i++;
-    }
+    sendWhiteCards(msg);
 }
 
 function pickBlackCard(msg) {
@@ -191,7 +176,6 @@ function assignPicks(msg) {
 }
 
 function sendWhiteCards(msg) {
-    randomizeWhiteCards(msg);
     i = 0;
     while (i < playerCards.length) {
         j = 0;
@@ -282,4 +266,4 @@ function checkVoteValidity(msg) {
     }
 }
 
-client.login('token-here');
+client.login('OTUwOTYzMTAyMTI2NjA0Mzcx.YigjZw.KUneBCtdEi_3PWoakxcoblJJvUc');
