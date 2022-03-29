@@ -1,12 +1,18 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
+const cactiWhiteCards = ["We wo", "Bottom", "Cumray", "-ussy", "YOOOOOO", "Nude stravinsky", "Hentai land","Some bitches","Deez nuts", "Free bottom surgery", "Dumpling Palace", "Ichiban", "Yume", "Vivi's", "Yo Dumpy's?", "Booling", "The Christian Science Center", "Genshin Impact", "Black nail polish", "Pico Park", "Berklee Esports", "Get pegged", "Kamal's irresistably hot hands", "Catgirl Miles", "We wo", "Cumracist", "Elizabeth, NJ", "Ares' keyboard", "New Hampshire Curry", "Chimken", "Among Us IRL", "Depresso Espresso", "160", "Westland", "Middlesex"];
+const cactiBlackCards = ["Marc Yu is an anagram for __________", "I support men's rights, men's rights to __________", "__________ussy", "__________? That's what they called me in middle school.", "Berklee College of __________", "Getting my bottom surgery at __________", "Jacquie's high on __________ tonight", "Nothing is better than Little Bake's __________", "Introducing the newest Super Smash Bros character, __________", "Izzi goes to Berklee and __________", "I'm single because __________", "I'm poor beacuse __________", "Inside of you are two wolves, one is __________", "2AM run to __________", "Nothing is more cringe than __________"];
+const defaultWhiteCards = ["Cockfights", "A Gypsy curse", "Dead parents", "Friendly fire", "A moment of silence", "Ronald Reagan", "Opposable thumbs", "A dissapointing birthday party", "An honest cop with nothing left to lose", "Famine", "A tiny horse", "Flying sex snakes", "Nicolas Cage", "Not giving a shit about the third world", "Sexting", "Mutualy-assured destruction", "Pedophiles", "Virgins", "A drive-by shooting", "My vagina", "A time travel paradox", "A murder most foul", "Giving 110 percent", "Poor people", "Crippling debt", "Trail of Tears", "Daddy issues", "The Donald Trump seal of approval", "Former president George W. Bush"];
+const defaultBlackCards = ["What ended my last relationship?", "__________? There's an app for that", "In Michael Jackson's last moments, he thought about __________", "In Rome, there are whisperings that the Vatican has a secret room devoted to __________", "__________. High five bro", "In the distant future, historians will agree that __________ marked the beginning of America's decline", "__________. It's a trap!", "__________ helps Obama unwind", "__________? That's how I want to die", "__________ will always get you laid", "Life was difficult for cavemen before __________", "A girl's best friend is __________"];
+const prideWhiteCards = ["30 shirtless bears emerging from the fog.", "A 6-hour conversation on gender and queer theory.", "A Subaru.", "A big black dick strapped to a frail white body.", "A genderless hole.", "A messy bitch who lives for drama.", "A twink in a bounce house.", "All the different kinds of lesbians.", "Black, white, Puerto Rican, and Chinese boys.", "Britney, bitch!", "Getting your ass ate.", "Having your titties sucked while sucking on titties.", "Licking that pussy right.", "Marsha P. Johnson, the trans woman of color who may have thrown the first brick at Stonewall", "Older fitness gays.", "Peeing in a bathroom.", "Poppers and lube.", "PrEP.", "Repeatedly coming out as bisexual.", "Talking, laughing, loving, breathing, fighting, fucking, crying, drinking, riding, winning, losing, cheating, kissing, thinking, dreaming.", "Telling Heather she can't pull off that top.", "The careless cunt who left a water ring on my credenza.", "The pan-ethnic, gender-fluid children of the future.", "Those cheekbones, honey.", "Whatever straight people do for fun."];
+const prideBlackCards = ["Excuse me, straight man, but __________ isn't for you, STRAIGHT MAN.", "GOD HATES __________!", "If you can't love yourself, how the hell you gonna love __________?", "We're here! We're __________! Get used to it!", "YAAAAAAS! You are serving me __________ realness!"];
+var whiteCardValues = [];
+var blackCardValues = [];
 var players = [];
 var playerChoices = [];
 var playerCards = [];
 var czarIndex = 0;
-var whiteCardValues = ["We wo", "Bottom", "Cumray", "-ussy", "YOOOOOO", "Nude stravinsky", "Hentai land","Some bitches","Deez nuts", "Free bottom surgery", "Dumpling Palace", "Ichiban", "Yume", "Vivi's", "Yo Dumpy's?", "Booling", "The Christian Science Center", "Genshin Impact", "Black nail polish", "Pico Park", "Berklee Esports", "Get pegged", "Kamal's irresistably hot hands", "Catgirl Miles", "We wo", "Cumracist", "Elizabeth, NJ", "Ares' keyboard", "New Hampshire Curry", "Chimken", "Among Us IRL", "Depresso Espresso", "160", "Westland", "Middlesex"]
 var whiteCards = [];
-var blackCardValues = ["Marc Yu is an anagram for __________", "I support men's rights, men's rights to __________", "__________ussy", "__________? That's what they called me in middle school.", "Berklee College of __________", "Getting my bottom surgery at __________", "Jacquie's high on __________ tonight", "Nothing is better than Little Bake's __________", "Introducing the newest Super Smash Bros character, __________", "Izzi goes to Berklee and __________", "I'm single because __________", "I'm poor beacuse __________", "Inside of you are two wolves, one is __________", "2AM run to __________", "Nothing is more cringe than __________"];
 var blackCards = [];
 var currBlackCard;
 const numCards = 5;
@@ -36,6 +42,10 @@ client.on('message', msg => {
                 msg.channel.send(client.users.cache.find(user => user.id === players[i]).username);
             }
         } else if (msg.content.includes("start")) {
+            if (whiteCardValues[0] == null) {
+                msg.channel.send("Please select card packs");
+                return;
+            }
             populateCards();
             populatePlayerCards();
             msg.channel.send("Starting, sending cards!");
@@ -66,9 +76,39 @@ client.on('message', msg => {
             } else {
                 msg.channel.send("You are not the card czar!");
             }
+        } else if (msg.content.includes("setup")) {
+            if (msg.content.includes("default")) {
+                for (i in defaultBlackCards) {
+                    blackCardValues.push(defaultBlackCards[i])
+                }
+                for (i in defaultWhiteCards) {
+                    whiteCardValues.push(defaultWhiteCards[i])
+                }
+            } 
+            if (msg.content.includes("cacti")) {
+                for (i in cactiBlackCards) {
+                    blackCardValues.push(cactiBlackCards[i])
+                }
+                for (i in cactiWhiteCards) {
+                    whiteCardValues.push(cactiWhiteCards[i])
+                }
+            }
+            if (msg.content.includes("pride")) {
+                for (i in prideBlackCards) {
+                    blackCardValues.push(prideBlackCards[i])
+                }
+                for (i in prideWhiteCards) {
+                    whiteCardValues.push(prideWhiteCards[i])
+                }
+            }
+        } else if (msg.content.includes("check white values")) {
+            for (i in whiteCardValues) {
+                msg.channel.send(i)
+            }
         }
     }
 });
+
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
@@ -123,7 +163,6 @@ function assignPicks(msg) {
         }
         count++;
     }
-    // msg.channel.send(playerChoices.length);
 }
 
 function sendWhiteCards(msg) {
@@ -199,7 +238,6 @@ function populatePlayerCards() {
 
 function checkWinner(msg) {
     for (i in playerCards) {
-        // msg.channel.send(playerCards[i].points);
         if (playerCards[i].points === 5) {
             msg.channel.send(client.users.cache.find(user => user.id === players[i]).username + " wins!");
         }
@@ -219,4 +257,4 @@ function checkVoteValidity(msg) {
     }
 }
 
-client.login('token-here');
+client.login('OTUwOTYzMTAyMTI2NjA0Mzcx.YigjZw.x16cfx_PcGvFsIYCHW4OHR3x3fY');
