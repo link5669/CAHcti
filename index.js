@@ -133,7 +133,32 @@ function nextRound(msg) {
     msg.channel.send("Next round, " + client.users.cache.find(user => user.id === players[czarIndex]).username + " is the card czar");
     msg.channel.send("Here's the next round!");
     pickBlackCard(msg);
-    sendWhiteCards(msg);
+    // sendWhiteCards(msg);
+    sendNewWhiteCards(msg);
+}
+
+function sendNewWhiteCards(msg) {
+    for (i in playerChoices) {
+        found = false;
+        while (found === false) {
+            currCard = whiteCards[Math.floor(Math.random() * whiteCards.length)]; 
+            if (currCard.used === false) {
+                found = true;
+                playerCards[i].cards[playerChoices[i]] =  currCard;
+                currCard.used = true;
+            }
+        }
+    }
+    i = 0;
+    while (i < playerCards.length) {
+        j = 0;
+        while (j < numCards) {
+            client.users.cache.find(user => user.id === players[i]).send(playerCards[i].cards[j].value);
+            j++;
+        }
+        client.users.cache.find(user => user.id === players[i]).send("-----------------------------");
+        i++;
+    }
 }
 
 function pickBlackCard(msg) {
