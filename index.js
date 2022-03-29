@@ -266,4 +266,4 @@ function checkVoteValidity(msg) {
     }
 }
 
-client.login('OTUwOTYzMTAyMTI2NjA0Mzcx.YigjZw.KUneBCtdEi_3PWoakxcoblJJvUc');
+client.login('token-here');
